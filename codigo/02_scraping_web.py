@@ -1,9 +1,10 @@
 # Nombres y apellidos: Huaroc Cardenas Jordan Jose
 # Código de matrícula: 2024200503I
 # Tema N.º 20: Capitalización compuesta frente a la inflación: poder adquisitivo del ahorro peruano
-# Fecha de extracción: 2026-09-24
+# Fecha de extracción: 2026-09-25
 
 import os
+import glob
 import json
 import time
 import requests
@@ -361,6 +362,86 @@ def extraer_mes(
 
 
 # ============================================================
+# REUTILIZAR CRUDOS VÁLIDOS YA DESCARGADOS
+# ============================================================
+
+def buscar_html_existente(fecha_objetivo):
+
+    fecha_objetivo = pd.Timestamp(
+        fecha_objetivo
+    )
+
+    patron = os.path.join(
+        RUTA_HTML,
+        fecha_objetivo.strftime(
+            "sbs_%Y_%m_*.html"
+        )
+    )
+
+    candidatos = sorted(
+        glob.glob(patron),
+        reverse=True
+    )
+
+    for ruta in candidatos:
+
+        try:
+
+            with open(
+                ruta,
+                "r",
+                encoding="utf-8",
+                errors="ignore"
+            ) as archivo:
+
+                texto = archivo.read()
+
+            if not tiene_tabla_bancaria(
+                texto
+            ):
+                continue
+
+            nombre = os.path.basename(
+                ruta
+            )
+
+            fecha_sbs = datetime.strptime(
+                nombre,
+                "sbs_%Y_%m_%d.html"
+            )
+
+            return {
+                "periodo":
+                    fecha_objetivo.strftime(
+                        "%Y-%m-%d"
+                    ),
+                "fecha_sbs":
+                    fecha_sbs.strftime(
+                        "%Y-%m-%d"
+                    ),
+                "retroceso_dias":
+                    (
+                        fecha_objetivo.normalize()
+                        - pd.Timestamp(fecha_sbs)
+                    ).days,
+                "http":
+                    "",
+                "bytes":
+                    os.path.getsize(ruta),
+                "archivo":
+                    nombre,
+                "error":
+                    ""
+            }
+
+        except Exception:
+
+            continue
+
+    return None
+
+
+# ============================================================
 # EJECUCIÓN
 # ============================================================
 
@@ -387,14 +468,27 @@ for numero, fecha in enumerate(
 
     try:
 
-        info = extraer_mes(
+        info = buscar_html_existente(
             fecha
         )
+
+        if info is None:
+
+            info = extraer_mes(
+                fecha
+            )
+
+            estado = "DESCARGADO"
+
+        else:
+
+            estado = "REUTILIZADO"
 
         registros.append(info)
 
         print(
-            "OK | fecha SBS:",
+            estado,
+            "| fecha SBS:",
             info["fecha_sbs"]
         )
 
@@ -480,3 +574,10 @@ print(
     "Directorio crudo:",
     RUTA_HTML
 )
+
+if exitosos != len(fechas):
+
+    raise RuntimeError(
+        f"Extracción SBS incompleta: "
+        f"{exitosos}/{len(fechas)} periodos."
+    )

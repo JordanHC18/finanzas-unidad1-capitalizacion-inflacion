@@ -1,7 +1,7 @@
 # Nombres y apellidos: Huaroc Cardenas Jordan Jose
 # Código de matrícula: 2024200503I
 # Tema N.º 20: Capitalización compuesta frente a la inflación: poder adquisitivo del ahorro peruano
-# Fecha de extracción: 2026-09-24
+# Fecha de extracción: 2026-09-25
 
 import os
 import html
