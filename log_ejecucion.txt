@@ -1,0 +1,30 @@
+
+======================================================================
+01_extraccion_api.py
+======================================================================
+Fecha y hora: 2026-09-25 15:57:39.370895
+Endpoint: https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN38705PM/csv/2018-1/2026-8/esp
+Código HTTP: 200
+Filas descargadas: 104
+Bytes descargados: 3194
+Archivo crudo: /content/finanzas_unidad1/datos_crudos/ipc_bcrp_PN38705PM_2024200503I.csv
+
+======================================================================
+02_scraping_web.py
+======================================================================
+Fecha y hora: 2026-09-25 16:12:09.873885
+Periodos solicitados: 104
+Periodos descargados: 104
+HTTP exitosos: 104
+
+======================================================================
+03_limpieza_datos.py
+======================================================================
+Fecha y hora: 2026-09-25 16:12:42.537322
+Entidades completas: 11
+Periodos: 104
+Filas procesadas: 1144
+Faltantes finales: 0
+Outliers IQR detectados y conservados: 84
+Interpolaciones: 0
+SHA-256: 9b2224512144585c01db24d757652ae7b9a73b3fbeaa1dd76163e379e9f2ba7c
