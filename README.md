@@ -154,12 +154,9 @@ Ver:
 .env.example
 
 ---
-
 ## Repositorio GitHub
 
-PENDIENTE_COLOCAR_URL_GITHUB
-
-
+https://github.com/JordanHC18/finanzas-unidad1-capitalizacion-inflacion
 ---
 
 ## Entorno de ejecución
@@ -168,9 +165,15 @@ Versión de Python: Python 3.13.15
 
 Librerías utilizadas:
 
-pandas==2.2.3
-numpy==2.1.3
-requests==2.32.4
-beautifulsoup4==4.13.5
-lxml==6.1.2
-openpyxl==3.1.5
+pandas==2.2.3  
+numpy==2.1.3  
+requests==2.32.4  
+beautifulsoup4==4.13.5  
+lxml==6.1.2  
+openpyxl==3.1.5  
+matplotlib==3.10.0
+
+## Estado final del proyecto
+
+Versión final de la documentación y de la base utilizada en el artículo
+“Capitalización compuesta frente a la inflación: poder adquisitivo del ahorro peruano, 2018–2026”.
